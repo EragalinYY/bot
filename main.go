@@ -12,5 +12,3 @@ func main() {
 	status, _ := bufio.NewReader(conn).ReadString('\n') //Вывод первой строки ответа
 	fmt.Println(status)
 }
-
-1
