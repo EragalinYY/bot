@@ -12,3 +12,8 @@ func main() {
 	status, _ := bufio.NewReader(conn).ReadString('\n') //Вывод первой строки ответа
 	fmt.Println(status)
 }
+
+var a int8
+var b int16
+var c int32
+var d int64
