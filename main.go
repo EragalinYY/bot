@@ -76,8 +76,7 @@ func main() {
 				msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Привет! Я твой бот. Чем я могу помочь вам сегодня?")
 				bot.Send(msg)
 			case "help":
-				msg := tgbotapi.NewMessage(update.Message.Chat.ID, "I can help you with the following commands:\n/start - Start the bot\n/help - Show this help message")
-				bot.Send(msg)
+				msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Я могу помочь вам со следующими командами:\n/start - Запустите бота\n/weather - Запросить прогноз погоды\n/help - Отобразить справку")
 				bot.Send(msg)
 			case "weather":
 				city := update.Message.CommandArguments()
