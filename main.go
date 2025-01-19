@@ -1,18 +1,53 @@
 package main
 
 import (
+	"encoding/json"
+	"fmt"
 	"log"
+	"net/http"
 	"os"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"github.com/joho/godotenv"
 )
 
+type WeatherResponse struct {
+	Weather []struct {
+		Description string `json:"description"`
+	} `json:"weather"`
+	Main struct {
+		Temp float64 `json:"temp"`
+	} `json:"main"`
+	Name string `json:"name"`
+}
+
 func init() {
 	// loads values from .env into the system
 	if err := godotenv.Load(); err != nil {
 		log.Print("No .env file found")
 	}
+}
+
+func getWeather(city string) (string, error) {
+	apiKey := os.Getenv("OPENWEATHERMAP_API_KEY")
+	url := "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey + "&units=metric"
+
+	resp, err := http.Get(url)
+	if err != nil {
+		return "", err
+	}
+	defer resp.Body.Close()
+
+	var weatherResponse WeatherResponse
+	if err := json.NewDecoder(resp.Body).Decode(&weatherResponse); err != nil {
+		return "", err
+	}
+
+	weatherDescription := weatherResponse.Weather[0].Description
+	temperature := weatherResponse.Main.Temp
+	cityName := weatherResponse.Name
+
+	return "Weather in " + cityName + ": " + weatherDescription + ", Temperature: " + fmt.Sprintf("%.2f", temperature) + "°C", nil
 }
 
 func main() {
