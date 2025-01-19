@@ -82,20 +82,20 @@ func main() {
 			case "weather":
 				city := update.Message.CommandArguments()
 				if city == "" {
-					msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Please provide a city name")
+					msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Пожалуйста, укажите название населенного пункта")
 					bot.Send(msg)
 					continue
 				}
 				weatherInfo, err := getWeather(city)
 				if err != nil {
-					msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Could not get weather information")
+					msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Не удалось получить информацию о погоде")
 					bot.Send(msg)
 					continue
 				}
 				msg := tgbotapi.NewMessage(update.Message.Chat.ID, weatherInfo)
 				bot.Send(msg)
 			default:
-				msg := tgbotapi.NewMessage(update.Message.Chat.ID, "I don't know that command")
+				msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Я не знаю этой команды")
 				bot.Send(msg)
 			}
 		} else {
