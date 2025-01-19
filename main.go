@@ -43,6 +43,22 @@ func main() {
 			case "help":
 				msg := tgbotapi.NewMessage(update.Message.Chat.ID, "I can help you with the following commands:\n/start - Start the bot\n/help - Show this help message")
 				bot.Send(msg)
+				bot.Send(msg)
+			case "weather":
+				city := update.Message.CommandArguments()
+				if city == "" {
+					msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Please provide a city name")
+					bot.Send(msg)
+					continue
+				}
+				weatherInfo, err := getWeather(city)
+				if err != nil {
+					msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Could not get weather information")
+					bot.Send(msg)
+					continue
+				}
+				msg := tgbotapi.NewMessage(update.Message.Chat.ID, weatherInfo)
+				bot.Send(msg)
 			default:
 				msg := tgbotapi.NewMessage(update.Message.Chat.ID, "I don't know that command")
 				bot.Send(msg)
