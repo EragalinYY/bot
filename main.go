@@ -38,7 +38,7 @@ func main() {
 		if update.Message.IsCommand() {
 			switch update.Message.Command() {
 			case "start":
-				msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Hello! I'm your bot. How can I help you today?")
+				msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Привет! Я твой бот. Чем я могу помочь вам сегодня?")
 				bot.Send(msg)
 			case "help":
 				msg := tgbotapi.NewMessage(update.Message.Chat.ID, "I can help you with the following commands:\n/start - Start the bot\n/help - Show this help message")
